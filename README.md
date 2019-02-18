@@ -1,27 +1,31 @@
-# MovieRaterWeb
+# Movie Rater Web UI
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 7.3.1.
+This is a web UI that  allows users to rate movies. It is meant to be used in conjunction with the [movie rater ws](https://github.com/JustAnotherSoftwareDeveloper/movie-rater-ws) project. The application runs at port 4200, and assumes the ws is running at port 3000. Note that due to this being a development project, I am simply using ng serve to develop. I would obviously not do this in a production environment. 
 
-## Development server
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The app will automatically reload if you change any of the source files.
+# Technologies Used
 
-## Code scaffolding
+ - Angular - Angular is what I use at work, and since I was timeboxing myself I just stuck with it. In the future, I might write a companion UI in vue.js. While Angular is not as "hot" as React or Vue, it is still the 2nd most popular framework. I don't feel like I'm unjustified in using it. 
+ - Bootstrap - Bootstrap is a great styling framework. The 4th iteration has modern css feature support, and overall I enjoy the way it looks. 
+ - ng-bootstrap - This is the angular-bootstrap integration library that bootstrap recommends. 
+ - ngx-datatable - Any decent amount of data will do better with some sort of table framework. I used to use ngx-datable at work. I actually hated it. There are a lot of issues with this component when working with any reasonably sized amount of data. However, for small and simple datasets it's very quick to develop. 
+ - ng-select - ng-bootstrap's autocomplete is awful. I've found ng-select as a great alternative. 
+## To Install
+Run 
+    npm ci
+This will download files according to my package-lock.json 
+At that point you can run following command:
 
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
+    npm run serve
+Note this is not meant for production deployment.
+## Disclaimer
 
-## Build
+This was a small project I finished in a weekend. It is missing a lot of stuff I would consider essential in a production level application. This includes:
 
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory. Use the `--prod` flag for a production build.
+ - ANY TESTING
+ - A login feature
+ - Editing of Categories
+ - User specific movies/categories
+ - 
 
-## Running unit tests
-
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
-
-## Running end-to-end tests
-
-Run `ng e2e` to execute the end-to-end tests via [Protractor](http://www.protractortest.org/).
-
-## Further help
-
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI README](https://github.com/angular/angular-cli/blob/master/README.md).
+### If you have any questions, feel free to contact me
