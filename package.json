@@ -24,6 +24,7 @@
     "ag-grid-community": "~20.0.0",
     "bootstrap": "~4.3.1",
     "core-js": "^2.5.4",
+    "ng-starrating": "~1.0.6",
     "ngx-toastr": "~9.1.2",
     "rxjs": "~6.3.3",
     "star-rating-web-component": "~1.1.1",

@@ -1,3 +1,120 @@
-<p>
-  user-rating-control works!
-</p>
+<div class="container-fluid pt-1">
+  <div class="row">
+    <div class="col">
+      <h4>Rate Movies</h4>
+    </div>
+  </div>
+  <div *ngIf="!commonDataLoaded()" class="row justify-content-center">
+    <div class="col">
+      <i class="mdi mdi-spin"></i>
+    </div>
+  </div>
+  <ng-container *ngIf="commonDataLoaded()">
+    <div class="row justify-content-around">
+      <div class="col">
+        <ng-select [items]="users" [(ngModel)]="selectedUser" bindLabel="username" (ngModelChange)="onUserChanged()"
+          placeholder="Select User">
+        </ng-select>
+      </div>
+      <div class="col">
+        <button class="btn btn-primary float-right" (click)="open(addUser)">Add User <i
+            class="mdi mdi-plus"></i></button>
+      </div>
+    </div>
+    <ng-container *ngIf="selectedUser">
+      <div class="row pb-1">
+        <div class="col">
+          <button type="button" class="btn btn-primary" (click)="open(addRating)"
+            [disabled]="!userMoviesNotRated.length">Add Rating <i class="mdi mdi-plus"></i></button>
+        </div>
+      </div>
+      <div class="row">
+        <div *ngIf="!loading.ratings" class="col">
+
+          <ngx-datatable class="material" [rows]="userRatings" [columnMode]="'force'" [rowHeight]="'autoHeight'"
+            [headerHeight]="50">
+            <ngx-datatable-column name="Movie" prop="movie.movieName">
+              <ng-template let-row="row" let-value="value" let-index="rowIndex" ngx-datatable-cell-template>
+                <span>{{value}}</span>
+                <button class="btn btn-danger float-right" (click)="deleteRating(row,index)"><i
+                    class="mdi mdi-trash-can"></i></button>
+              </ng-template>
+            </ngx-datatable-column>
+            <ngx-datatable-column name="Category" prop="category.categoryName">
+              <ng-template let-row="row" ngx-datatable-cell-template>
+                <ng-select [items]="categories" bindLabel="categoryName" clearable="false" [(ngModel)]="row.category"
+                  (ngModelChange)="updateRating(row)" appendTo="body">
+                </ng-select>
+              </ng-template>
+            </ngx-datatable-column>
+            <ngx-datatable-column name="Rating" prop="score">
+              <ng-template let-row="row" ngx-datatable-cell-template>
+                <ngb-rating [(rate)]="row.score" (rateChange)="updateRating(row)">
+                  <ng-template let-fill="fill" let-index="index">
+                    <span class="star" [class.filled]="fill === 100">&#9733;</span>
+                  </ng-template>
+                </ngb-rating>
+              </ng-template>
+            </ngx-datatable-column>
+          </ngx-datatable>
+        </div>
+        <div *ngIf="loading.ratings" class="col">
+          <i class="mdi mdi-spin"></i>
+        </div>
+      </div>
+    </ng-container>
+
+  </ng-container>
+
+</div>
+
+<ng-template #addUser let-modal>
+  <div class="modal-header">
+    <h4 class="modal-title">Add User</h4>
+    <button type="button" class="close" (click)="modal.dismiss()"><i class="mdi mdi-close"></i></button>
+  </div>
+  <div class="modal-body">
+    <div class="form-group">
+      <label for="newCategory">User Name</label>
+      <input #name type="text" required class="form-control" id="newCategory" placeholder="Enter Name">
+    </div>
+  </div>
+  <div class="modal-footer">
+    <button type="button" class="btn btn-primary" (click)="submitUser(name.value,modal)">Submit</button>
+  </div>
+</ng-template>
+
+<ng-template #addRating let-modal>
+  <div class="modal-header">
+    <h4 class="modal-title">Add Rating</h4>
+    <button type="button" class="close" (click)="modal.dismiss()"><i class="mdi mdi-close"></i></button>
+  </div>
+  <div class="modal-body">
+    <div class="form-group">
+      <div>
+        <label for="newMovie">Movie</label>
+        <ng-select #movie required id="newMovie" [items]="userMoviesNotRated" bindLabel="movieName" appendTo="body">
+        </ng-select>
+      </div>
+      <div>
+        <label for="newCategory">Category</label>
+        <ng-select #category required id="newCategory" [items]="categories" bindLabel="categoryName" appendTo="body">
+        </ng-select>
+      </div>
+      <div>
+        <label for="newScore" class="d-block">Score</label>
+        <ngb-rating #score>
+          <ng-template let-fill="fill" let-index="index">
+            <span class="star" [class.filled]="fill === 100">&#9733;</span>
+          </ng-template>
+        </ngb-rating>
+      </div>
+
+    </div>
+  </div>
+  <div class="modal-footer">
+    <button type="button" class="btn btn-primary" [disabled]="!movie.selectedValues.length"
+      (click)="submitRating(movie.selectedValues[0],category.selectedValues[0],score.rate,modal)">
+      Submit</button>
+  </div>
+</ng-template>
