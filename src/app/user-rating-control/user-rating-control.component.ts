@@ -104,6 +104,7 @@ export class UserRatingControlComponent implements OnInit,OnDestroy {
     this.ratingService.deleteRating(rating.ratingId).subscribe(() => {
         this.userRatings.splice(index,1);
         this.userRatings = [...this.userRatings];
+        this.userMoviesNotRated = this.getMoviesNotRated();
         this.toastr.warning(`Rating for ${rating.movie.movieName} deleted`);
     });
 
@@ -127,7 +128,7 @@ export class UserRatingControlComponent implements OnInit,OnDestroy {
   }
 
   private getMoviesNotRated() : Movie[] {
-    const ratedMovieIds = new Set<number>(this.userRatings.map(rating => rating.ratingId));
+    const ratedMovieIds = new Set<number>(this.userRatings.map(rating => rating.movie.movieId));
     return this.movies.filter(movie => !ratedMovieIds.has(movie.movieId))
   }
 
