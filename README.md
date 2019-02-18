@@ -16,7 +16,7 @@ Run
 This will download files according to my package-lock.json 
 At that point you can run following command:
 
-    npm run serve
+    npm run start
 Note this is not meant for production deployment.
 ## Disclaimer
 
