@@ -1,0 +1,62 @@
+<div class="container-fluid pt-2">
+  <div class="row">
+    <div class="col-6">
+      <h4 class="d-inline">Movies</h4>
+      <button class="btn btn-primary float-right" (click)="openModal(addMovie)">Add Movie <i class="mdi mdi-plus"></i></button>
+    </div>
+    <div class="col-6">
+      <h4 class="d-inline">Categories</h4>
+      <button class="btn btn-primary float-right" (click)="openModal(addCategory)">Add Category<i class="mdi mdi-plus"></i></button>
+    </div>
+  </div>
+  <div class="row pt-2">
+    <div *ngIf="!loading.movies" class="col-6">
+      <ngx-datatable class="material" [rows]="movies" [columnMode]="'force'" [rowHeight]="'autoHeight'" [headerHeight]="50">
+        <ngx-datatable-column prop="movieName"></ngx-datatable-column>
+      </ngx-datatable>
+    </div>
+    <div *ngIf="loading.movies" class="col-6">
+      <i class="mdi mdi-spin mdi-loading"></i>
+    </div>
+    <div *ngIf="!loading.categories" class="col-6">
+      <ngx-datatable class="material" [rows]="categories" [columnMode]="'force'" [rowHeight]="'autoHeight'" [headerHeight]="50">
+        <ngx-datatable-column prop="categoryName"></ngx-datatable-column>
+      </ngx-datatable>
+    </div>
+    <div *ngIf="loading.categories" class="col-6">
+        <i class="mdi mdi-spin mdi-loading"></i>
+      </div>
+  </div>
+</div>
+
+<ng-template #addMovie let-modal>
+  <div class="modal-header">
+    <h4 class="modal-title">Add Movie</h4>
+    <button type="button" class="close" (click)="modal.dismiss()"><i class="mdi mdi-close"></i></button>
+  </div>
+  <div class="modal-body">
+    <div class="form-group">
+      <label for="newMovie">Movie Name</label>
+      <input #name type="text" required class="form-control" id="newMovie" placeholder="Enter Name">
+    </div>
+  </div>
+  <div class="modal-footer">
+    <button type="button" class="btn btn-primary" (click)="submitMovie(name.value,modal)">Submit</button>
+  </div>
+</ng-template>
+
+<ng-template #addCategory let-modal>
+  <div class="modal-header">
+    <h4 class="modal-title">Add Category</h4>
+    <button type="button" class="close" (click)="modal.dismiss()"><i class="mdi mdi-close"></i></button>
+  </div>
+  <div class="modal-body">
+    <div class="form-group">
+      <label for="newCategory">Category Name</label>
+      <input #name type="text" required class="form-control" id="newCategory" placeholder="Enter Name">
+    </div>
+  </div>
+  <div class="modal-footer">
+    <button type="button" class="btn btn-primary" (click)="submitCategory(name.value,modal)">Submit</button>
+  </div>
+</ng-template>
